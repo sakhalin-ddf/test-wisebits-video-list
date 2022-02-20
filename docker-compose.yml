@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  db:
+    image: library/postgres:14.2-alpine3.15
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=${DB_NAME:-db_name}
+      - POSTGRES_USER=${DB_USER:-db_user}
+      - POSTGRES_PASSWORD=${DB_PASS:-db_pass}
+    networks:
+      - default
+
+  php_fpm:
+    build:
+      context: .docker/deps/php-fpm
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app:delegated
+    expose:
+      - 9000
+    networks:
+      - default
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: .docker/deps/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./web:/app/web:ro
+    ports:
+      - "8080:80"
+    networks:
+      - default
+    depends_on:
+      - php_fpm
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local

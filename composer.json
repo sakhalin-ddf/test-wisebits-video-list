@@ -1,0 +1,79 @@
+{
+  "name": "yiisoft/yii2-app-basic",
+  "description": "Yii 2 Basic Project Template",
+  "keywords": [
+    "yii2",
+    "framework",
+    "basic",
+    "project template"
+  ],
+  "homepage": "http://www.yiiframework.com/",
+  "type": "project",
+  "license": "BSD-3-Clause",
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.4",
+    "vlucas/phpdotenv": "^5.4",
+    "yiisoft/yii2": "^2.0",
+    "yiisoft/yii2-bootstrap4": "^2.0",
+    "yiisoft/yii2-swiftmailer": "^2.1"
+  },
+  "require-dev": {
+    "codeception/codeception": "^4.0",
+    "codeception/module-asserts": "^1.0.0",
+    "codeception/module-filesystem": "^1.0.0",
+    "codeception/module-yii2": "^1.0.0",
+    "codeception/specify": "~0.4.6",
+    "codeception/verify": "~0.5.0 || ~1.1.0",
+    "fakerphp/faker": "^1.19",
+    "roave/security-advisories": "dev-latest",
+    "symfony/browser-kit": ">=2.7 <=4.2.4",
+    "symplify/easy-coding-standard": "^10.0",
+    "yiisoft/yii2-debug": "~2.1.0",
+    "yiisoft/yii2-faker": "~2.0.0",
+    "yiisoft/yii2-gii": "~2.2.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    },
+    "fxp-asset": {
+      "enabled": false
+    },
+    "process-timeout": 1800,
+    "sort-packages": true
+  },
+  "scripts": {
+    "code-style-check": "ecs check --config ecs.php",
+    "code-style-format": "ecs check --config ecs.php --fix",
+    "post-install-cmd": [
+      "yii\\composer\\Installer::postInstall"
+    ],
+    "post-create-project-cmd": [
+      "yii\\composer\\Installer::postCreateProject",
+      "yii\\composer\\Installer::postInstall"
+    ]
+  },
+  "extra": {
+    "yii\\composer\\Installer::postCreateProject": {
+      "setPermission": [
+        {
+          "runtime": "0777",
+          "web/assets": "0777",
+          "yii": "0755"
+        }
+      ]
+    },
+    "yii\\composer\\Installer::postInstall": {
+      "generateCookieValidationKey": [
+        "config/web.php"
+      ]
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
+}
