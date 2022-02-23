@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * @var yii\web\View $this
  * @var string       $name
  * @var string       $message
  * @var Exception    $exception
  */
+
+declare(strict_types=1);
 
 use yii\helpers\Html;
 

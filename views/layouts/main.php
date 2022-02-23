@@ -1,17 +1,18 @@
 <?php
 
+/**
+ * @var \yii\web\View $this
+ * @var string $content
+ */
+
 declare(strict_types=1);
 
-/** @var yii\web\View $this */
-
-/** @var string $content */
-
-use app\assets\AppAsset;
+use app\assets\LayoutAsset;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\NavBar;
 
-AppAsset::register($this);
+LayoutAsset::register($this);
 ?>
 <?php $this->beginPage(); ?>
 <!DOCTYPE html>
@@ -29,12 +30,12 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-    'brandLabel' => Yii::$app->name,
+        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
-]);
+    ]);
     NavBar::end();
     ?>
 </header>
@@ -50,7 +51,7 @@ AppAsset::register($this);
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
-        <p>&copy; My Company <?= date('Y'); ?></p>
+        <p>&copy; <?= Yii::$app->name; ?> <?= date('Y'); ?></p>
     </div>
 </footer>
 

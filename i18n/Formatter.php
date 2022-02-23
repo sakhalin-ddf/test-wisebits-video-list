@@ -8,12 +8,13 @@ class Formatter extends \yii\i18n\Formatter
 {
     /**
      * @param $value
+     * @param bool $hideHoursIfEmpty
      *
      * @return string
      *
      * @throws \Exception
      */
-    public function asTimeDuration($value): string
+    public function asTimeDuration($value, bool $hideHoursIfEmpty = true): string
     {
         if ($value === null) {
             return $this->nullDisplay;
@@ -37,7 +38,7 @@ class Formatter extends \yii\i18n\Formatter
 
         $parts = [];
 
-        if ($interval->h > 0) {
+        if ($hideHoursIfEmpty && $interval->h > 0) {
             $parts[] = \str_pad((string)$interval->h, 2, '0', STR_PAD_LEFT);
         }
 
@@ -45,5 +46,28 @@ class Formatter extends \yii\i18n\Formatter
         $parts[] = \str_pad((string)$interval->s, 2, '0', STR_PAD_LEFT);
 
         return ($isNegative ? '-' : '') . \implode(':', $parts);
+    }
+
+    public function asCount($value): string
+    {
+        if ($value === null) {
+            return $this->nullDisplay;
+        }
+
+        [$params, $position] = $this->formatNumber($value, 1, 3, 1000, [], []);
+
+        $formattedValue = $params['nFormatted'];
+
+        switch ($position) {
+            case 2:
+                return "{$formattedValue}M";
+
+            case 1:
+                return "{$formattedValue}K";
+
+            case 0:
+            default:
+                return $formattedValue;
+        }
     }
 }

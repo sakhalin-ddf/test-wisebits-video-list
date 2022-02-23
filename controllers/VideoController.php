@@ -6,6 +6,7 @@ namespace app\controllers;
 
 use app\models\Video;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class VideoController extends Controller
 {
@@ -23,6 +24,10 @@ class VideoController extends Controller
     public function actionView(string $slug)
     {
         $model = Video::findOne(['slug' => $slug]);
+
+        if ($model === null) {
+            throw new NotFoundHttpException('Can not find requested page');
+        }
 
         return $this->render('view', [
             'model' => $model,

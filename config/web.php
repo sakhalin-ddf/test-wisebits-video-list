@@ -51,8 +51,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '' => 'video/index',
                 'video/<slug:[-\w]+>' => 'video/view',
+                'videos/page-<page:\d+>' => 'video/index',
+                'videos' => 'video/index',
             ],
         ],
         'user' => [
